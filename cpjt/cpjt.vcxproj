@@ -127,7 +127,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cpjt.c" />
+    <ClCompile Include="day01_1.c" />
+    <ClCompile Include="day01_10.c" />
+    <ClCompile Include="day01_2.c" />
+    <ClCompile Include="day01_6.c" />
+    <ClCompile Include="day01_4.c" />
+    <ClCompile Include="day01_3.c" />
+    <ClCompile Include="day01_5.c" />
+    <ClCompile Include="day01_7.c" />
+    <ClCompile Include="day01_8.c" />
+    <ClCompile Include="day01_9.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
