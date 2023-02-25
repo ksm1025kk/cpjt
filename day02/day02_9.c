@@ -12,7 +12,34 @@ int main() {
 
 	// 사용자로부터 초(second)를 입력받아 [시, 분, 초] 형태로 변환하라
 	// ex) 3365 ==>1시간 1분 6초)
-	
-	return 0;
+		
+		int peach = 0;
+		int bracket = 0;
+		printf("복숭아의 개수는 :");
+		scanf("%d", &peach);
 
+		bracket = peach / 10;
+		(peach % 10 == 0) ? bracket : bracket++;
+		printf("필요한 바구니 수 : %d \n", bracket);
+
+		double dNum = 0.0;
+		int result = 0;
+		printf("NUM:");
+		scanf("%lf", &dNum);
+
+		result = (int)dNum % 10;
+		printf("%d \n", result);
+
+		int time = 0;
+		int hour = 0, min = 0, sec = 0;
+
+		printf("초를 입력하세요 : ");
+		scanf("%d", &time);
+
+		hour = time / 60 / 60;
+		min = time % 3600 / 60;
+		sec = time / 60;
+		printf("%d시간 %d분 %d초 \n", hour, min, sec);
+
+		return 0;
 }
