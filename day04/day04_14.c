@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 
-int main() {
+int main13() {
 	
 	// 1. 100 ~ 200 숫자 중 3과 7의 배수를 출력하는 프로그램 만들기(단 3의 배수이면서 7의 배수이면 1번만 출력)
 	for (int n = 100; n <= 200; n++) {
