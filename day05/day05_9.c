@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 
-int main() {
+int main8() {
 	
 	int arr[5] = { 1, 2, 3, 4, 5 };
 	printf("배열의 이름 = %p\n", arr);						// 배열의 주소는
