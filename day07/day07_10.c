@@ -41,5 +41,6 @@ int main() {
 
 	printf("º¯°æÈÄ %d, %d\n", p_t2->num1, p_t2->num2);
 
+
 	return 0; 
 }
