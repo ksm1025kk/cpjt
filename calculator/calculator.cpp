@@ -7,7 +7,40 @@
 #define MUL    3
 #define DIV    4
 
+// DlgProc의 매개변수에 있는 값을 백업해서 다른 함수에서 사용하기 위한 전역변수
 HWND g_hDlg;
+
+void Oper(int first_num, int oper) {
+    int num = GetDlgItemInt(g_hDlg, IDC_EDIT1, 0, TRUE);
+    if (oper == ADD) {
+        SetDlgItemInt(g_hDlg, IDC_EDIT1, first_num + num, TRUE);
+    }
+    if (oper == SUB) {
+        SetDlgItemInt(g_hDlg, IDC_EDIT1, first_num - num, TRUE);
+    }
+    if (oper == MUL) {
+        SetDlgItemInt(g_hDlg, IDC_EDIT1, first_num * num, TRUE);
+    }
+    else if (oper == DIV) {
+        if (num != 0) {
+            SetDlgItemInt(g_hDlg, IDC_EDIT1, first_num / num, TRUE);
+        }
+        else {
+            SetDlgItemInt(g_hDlg, IDC_EDIT1, 0, TRUE);
+        }
+    }
+}
+
+void NumBtn(int number, int* p_reset_flag) {
+    if (*p_reset_flag == 0) {
+        int num = GetDlgItemInt(g_hDlg, IDC_EDIT1, 0, TRUE);
+        SetDlgItemInt(g_hDlg, IDC_EDIT1, num * 10 + number, TRUE);
+    }
+    else {
+        SetDlgItemInt(g_hDlg, IDC_EDIT1, number, TRUE);
+        *p_reset_flag = 0;
+    }
+}
 
 INT_PTR CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -18,7 +51,9 @@ INT_PTR CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     static int oper = 0;                // 0은 안눌림, 1은 더하기 , 2는 빼기, 3은 곱하기, 4는 나누기
     static int reset_flag;              // 0은 안눌림, 1 : 연산기호 눌림
     static int first_num;
-
+    
+    g_hDlg = hDlg;                      // 함수 안에 있는 지역변수의 값을 전역변수에 백업
+    
     switch (message){
     case WM_INITDIALOG:
         oper = NONE;
@@ -32,130 +67,39 @@ INT_PTR CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
             return (INT_PTR)TRUE;
         }
         else if (key == IDOK) {
-            if (oper == ADD) {
-                // 화면에 있는 값을 변수로 저장해서 -> 백업한 값과 더하기 하고 -> 화면에 보여준다.
-                int num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                SetDlgItemInt(hDlg, IDC_EDIT1, first_num + num, TRUE);
-            }
-            else if (oper == SUB) {
-                int num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                SetDlgItemInt(hDlg, IDC_EDIT1, first_num - num, TRUE);
-            }
-            else if (oper == MUL) {
-                int num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                SetDlgItemInt(hDlg, IDC_EDIT1, first_num * num, TRUE);
-            }
-            else if (oper == DIV) {
-                int num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                if (num != 0) {
-                    SetDlgItemInt(hDlg, IDC_EDIT1, first_num / num, TRUE);
-                }
-                else {
-                    SetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                }
-            }
+            Oper(first_num, oper);
             oper = NONE;
             reset_flag = 1;
         }
         else if (key == IDC_BUTTON0){
-            if (reset_flag == 0) {
-                int num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                SetDlgItemInt(hDlg, IDC_EDIT1, num * 10 + 0, TRUE);
-            }
-            else {
-                SetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                reset_flag = 0;
-            }
+            NumBtn(0, &reset_flag);
         }
         else if (key == IDC_BUTTON1) {
-            if (reset_flag == 0) {
-                int num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                SetDlgItemInt(hDlg, IDC_EDIT1, num * 10 + 1, TRUE);
-            }
-            else {
-                SetDlgItemInt(hDlg, IDC_EDIT1, 1, TRUE);
-                reset_flag = 0;
-            }
+            NumBtn(1, &reset_flag);
         }
         else if (key == IDC_BUTTON2) {
-            if (reset_flag == 0) {
-                int num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                SetDlgItemInt(hDlg, IDC_EDIT1, num * 10 + 2, TRUE);
-            }
-            else {
-                SetDlgItemInt(hDlg, IDC_EDIT1, 2, TRUE);
-                reset_flag = 0;
-            }
+            NumBtn(2, &reset_flag);
         }
         else if (key == IDC_BUTTON3) {
-            if (reset_flag == 0) {
-                int num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                SetDlgItemInt(hDlg, IDC_EDIT1, num * 10 + 3, TRUE);
-            }
-            else {
-                SetDlgItemInt(hDlg, IDC_EDIT1, 3, TRUE);
-                reset_flag = 0;
-            }
+            NumBtn(3, &reset_flag);
         }
         else if (key == IDC_BUTTON4) {
-            if (reset_flag == 0) {
-                int num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                SetDlgItemInt(hDlg, IDC_EDIT1, num * 10 + 4, TRUE);
-            }
-            else {
-                SetDlgItemInt(hDlg, IDC_EDIT1, 4, TRUE);
-                reset_flag = 0;
-            }
+            NumBtn(4, &reset_flag);
         }
         else if (key == IDC_BUTTON5) {
-            if (reset_flag == 0) {
-                int num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                SetDlgItemInt(hDlg, IDC_EDIT1, num * 10 + 5, TRUE);
-            }
-            else {
-                SetDlgItemInt(hDlg, IDC_EDIT1, 5, TRUE);
-                reset_flag = 0;
-            }
+            NumBtn(5, &reset_flag);
         }
         else if (key == IDC_BUTTON6) {
-            if (reset_flag == 0) {
-                int num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                SetDlgItemInt(hDlg, IDC_EDIT1, num * 10 + 6, TRUE);
-            }
-            else {
-                SetDlgItemInt(hDlg, IDC_EDIT1, 6, TRUE);
-                reset_flag = 0;
-            }
+            NumBtn(6, &reset_flag);
         }
         else if (key == IDC_BUTTON7) {
-            if (reset_flag == 0) {
-                int num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                SetDlgItemInt(hDlg, IDC_EDIT1, num * 10 + 7, TRUE);
-            }
-            else {
-                SetDlgItemInt(hDlg, IDC_EDIT1, 7, TRUE);
-                reset_flag = 0;
-            }
+            NumBtn(7, &reset_flag);
         }
         else if (key == IDC_BUTTON8) {
-            if (reset_flag == 0) {
-                int num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                SetDlgItemInt(hDlg, IDC_EDIT1, num * 10 + 8, TRUE);
-            }
-            else {
-                SetDlgItemInt(hDlg, IDC_EDIT1, 8, TRUE);
-                reset_flag = 0;
-            }
+            NumBtn(8, &reset_flag);
         }
         else if (key == IDC_BUTTON9) {
-            if (reset_flag == 0) {
-                int num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
-                SetDlgItemInt(hDlg, IDC_EDIT1, num * 10 + 9, TRUE);
-            }
-            else {
-                SetDlgItemInt(hDlg, IDC_EDIT1, 9, TRUE);
-                reset_flag = 0;
-            }
+            NumBtn(9, &reset_flag);
         }
         else if (key == IDC_CLEAR) {
             reset_flag = 0;
@@ -172,14 +116,17 @@ INT_PTR CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
             oper = ADD;
         }
         else if (key == IDC_SUB) {
+            first_num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
             reset_flag = 1;
             oper = SUB;
         }
         else if (key == IDC_ADD3) {
+            first_num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
             reset_flag = 1;
             oper = MUL;
         }
         else if (key == IDC_ADD4) {
+            first_num = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
             reset_flag = 1;
             oper = DIV;
         }
