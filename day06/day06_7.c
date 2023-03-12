@@ -49,17 +49,17 @@ int seven(int n7) {
 			result += 1;
 		}
 	}
-	printf("%d와 %d 사이의 7의 배수는 %d개입니다.", n7, end, result);
+	printf("%d와 %d 사이의 7의 배수는 %d개입니다.\n", n7, end, result);
 	return result;
 }
 
-int high() {
-	int n8 = 0;
-	double tall = 0.0;
-	printf("키를 cm단위로 입력하세요.==> ");
-	scanf("%d", n8);
-	tall = (double)n8 / 100;
-	printf("결과 : %lf", tall);
+int high(n8) {
+	int tall1 = 0;
+	int tall2 = 0;
+	tall1 = n8 / 100;
+	tall2 = n8 % 100;
+	printf("입력한 키 : %dcm\n", n8);
+	printf("결과 : %d.%dm입니다.\n", tall1, tall2);
 }
 
 int time(int n9) {
@@ -92,9 +92,9 @@ int main() {
 	//int result = math(10, 2);
 
 	// 두 정수를 매개변수로 받아 두 정수 사이에 모든 숫자의 합을 반환하는 함수 정의
-	//numadd(1, 10);
-	//numadd(10, 1);
-	//numadd(10, 10);
+	numadd(1, 10);
+	numadd(10, 1);
+	numadd(10, 10);
 
 	// 3. 정수 한개를 매개변수()로 받아 그 수보다 200 더 큰 정수 사이중 7의 배수가 몇개나 존재하는지 반환해주는 프로그램
 	// 정수를 입력하세요 : 100
@@ -103,11 +103,10 @@ int main() {
 	seven(100);
 
 	// 4. 사용자로부터 키를 입력받아 m 단위로 반환하는 함수 정의
-	// 키는 scanf, 입력은 main 함수에서 진행하고 정의한 함수에서는 매개변수로 받아 m 단위로 반환
 	// 키를 cm단위로 입력하세요 : 181cm
 	// 결과 : 1.81m
 	
-	high();
+	high(181);
 
 	// 5. 초(second)를 입력받아 매개변수()로 전달한다
 	// 함수는 전달받은 초를 시/분/초 형태로 출력해주기
